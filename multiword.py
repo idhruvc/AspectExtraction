@@ -36,16 +36,14 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1 - 1]
                 kal2 = kalimat[in2 - 1]
-                ceil = kal1 + ' ' + kal2
-                ress.append(ceil)
+                ress.append(kal1)
+                ress.append(kal2)
 
         return ress
 
     def advmod(self, sentence):  # extract multi word adverb
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
-        print(kalimat)
-        print(pola)
         ress = []
         ceil = []
 
@@ -56,7 +54,7 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1 - 1]
                 kal2 = kalimat[in2 - 1]
-                ceil = kal1 + ' ' + kal2
+                ceil = kal1 + ',' + kal2
                 ress.append(ceil)
 
         return ress
@@ -79,7 +77,8 @@ class StanfordNLP:
                         kalimat[in1 - 1]  # hanle with  not
                 kal2 = kalimat[in2 - 1]
                 ceil = kal1 + ' ' + kal2
-                ress.append(ceil)
+                ress.append(kal1)
+                ress.append(kal2)
         return ress
 
     def negationNO(self, sentence):  # extract negation no
@@ -95,8 +94,8 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1 - 1]
                 kal2 = kalimat[in2 - 1]
-                ceil = kal1 + ' ' + kal2
-                ress.append(ceil)
+                ress.append(kal1)
+                ress.append(kal2)
 
         return ress
 
@@ -120,7 +119,8 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1-1]
                 kal2 = kalimat[in2-1]
-                ceil = kal1 + ' ' + kal2
+                print(kal1)
+                print(kal2)
                 ress.append(ceil)
         if len(ress) > 1:
             ress[0:1] = [' '.join(ress)]
@@ -131,8 +131,6 @@ class StanfordNLP:
     def adjectivalModifier(self, sentence):  # extract multi word adverb
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
-        print(kalimat)
-        print(pola)
         ress = []
         ceil = []
 
@@ -143,8 +141,8 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1 - 1]
                 kal2 = kalimat[in2 - 1]
-                ceil = kal1 + ' ' + kal2
-                ress.append(ceil)
+                ress.append(kal1)
+                ress.append(kal2)
 
         return ress
 
@@ -152,9 +150,6 @@ class StanfordNLP:
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
         polas = self.nlp.pos_tag(sentence)
-        print(kalimat)
-        print(pola)
-        print(polas)
         ress = []
         ceil = []
         new = []
@@ -179,16 +174,15 @@ class StanfordNLP:
                             kal1 = kalimat[new[0] - 1]
                             kal2 = kalimat[new[1] - 1]
                             kal3 = kalimat[new[2] - 1]
-                            ceil = kal1 + ' ' + kal2 + ' ' + kal3
-                            ress.append(ceil)
+                            ress.append(kal1)
+                            ress.append(kal2)
+                            ress.append(kal3)
 
         return ress
 
     def adjectivalComplement(self, sentence):  # extract multi word adverb
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
-        print(kalimat)
-        print(pola)
         ress = []
         ceil = []
         new = []
@@ -207,8 +201,9 @@ class StanfordNLP:
                         kal1 = kalimat[new[0] - 1]
                         kal2 = kalimat[new[1] - 1]
                         kal3 = kalimat[new[2] - 1]
-                        ceil = kal1 + ' ' + kal2 + ' ' + kal3
-                        ress.append(ceil)
+                        ress.append(kal1)
+                        ress.append(kal2)
+                        ress.append(kal3)
 
         return ress
 
@@ -216,8 +211,6 @@ class StanfordNLP:
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
         polas = self.nlp.pos_tag(sentence)
-        print(kalimat)
-        print(pola)
         ress = []
         ceil = []
         new = []
@@ -238,11 +231,14 @@ class StanfordNLP:
                         if (polas[pola[j][1] - 1][1] == 'VBD' or polas[pola[j][1] - 1][1] == 'JJ'):
                             new.append(pola[j][1])
                         new = sorted(set(new))
-                        kal1 = kalimat[new[0] - 1]
-                        kal2 = kalimat[new[1] - 1]
-                        kal3 = kalimat[new[2] - 1]
-                        ceil = kal1 + ' ' + kal2 + ' ' + kal3
-                        ress.append(ceil)
+
+                        if len(new) == 3:
+                            kal1 = kalimat[new[0] - 1]
+                            kal2 = kalimat[new[1] - 1]
+                            kal3 = kalimat[new[2] - 1]
+                            ress.append(kal1)
+                            ress.append(kal2)
+                            ress.append(kal3)
 
         return ress
 
@@ -250,9 +246,6 @@ class StanfordNLP:
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
         polas = self.nlp.pos_tag(sentence)
-        print(kalimat)
-        print(pola)
-        print(polas)
         ress = []
         ceil = []
         new = []
@@ -274,15 +267,107 @@ class StanfordNLP:
                             new.append(pola[j][1])
                         new = sorted(set(new))
 
-                        print(new)
+
                         if len(new) == 3:
                             kal1 = kalimat[new[0] - 1]
                             kal2 = kalimat[new[1] - 1]
                             kal3 = kalimat[new[2] - 1]
-                            ceil = kal1 + ' ' + kal2 + ' ' + kal3
-                            ress.append(ceil)
+                            ress.append(kal1)
+                            ress.append(kal2)
+                            ress.append(kal3)
 
         return ress
+
+    def HasilDependencyPath(self, sentence):
+        check = False
+        if len(self.adjectivalModifier(sentence)) > 0:
+            print('1.Adjectival Modifier :')
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            print('Compound' + str(compound))
+            print('Negation' + str(negation))
+            print('NegationNo' + str(negationNo))
+            print('Advmod' + str(advmod))
+            print('HypoPhrase' + str(hypoPhrase))
+            check = True
+            if (len(negation) > 0):
+                negation.insert(1, advmod[0])
+                compound.extend(negation)
+            print(str('Output :' + str(compound)))
+        if len(self.directObject(sentence)) > 0:
+            print('2.Direct Object :')
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            print('Compound' + str(compound))
+            print('Negation' + str(negation))
+            print('NegationNo' + str(negationNo))
+            print('Advmod' + str(advmod))
+            print('HypoPhrase' + str(hypoPhrase))
+            check = True
+            if (len(negation) > 0):
+                negation.insert(1, advmod[0])
+                compound.extend(negation)
+            print(str('Output :' + str(compound)))
+        if len(self.adjectivalComplement(sentence)) > 0:
+            print('3.Adjectival Complement :')
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            print('Compound' + str(compound))
+            print('Negation' + str(negation))
+            print('NegationNo' + str(negationNo))
+            print('Advmod' + str(advmod))
+            print('HypoPhrase' + str(hypoPhrase))
+            check = True
+            if (len(negation) > 0):
+                negation.insert(1, advmod[0])
+                compound.extend(negation)
+            print(str('Output :' + str(compound)))
+        if len(self.complementVerb(sentence)) > 0:
+            print('4.Complement Verb :')
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            print('Compound' + str(compound))
+            print('Negation' + str(negation))
+            print('NegationNo' + str(negationNo))
+            print('Advmod' + str(advmod))
+            print('HypoPhrase' + str(hypoPhrase))
+            check = True
+            if (len(negation) > 0):
+                negation.insert(1, advmod[0])
+                compound.extend(negation)
+            print(str('Output :' + str(compound)))
+        if len(self.adverbialModifier(sentence)) > 0:
+            print('5.Adverbial Modifier :')
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            print('Compound' + str(compound))
+            print('Negation' + str(negation))
+            print('NegationNo' + str(negationNo))
+            print('Advmod' + str(advmod))
+            print('HypoPhrase' + str(hypoPhrase))
+            check = True
+            if (len(negation) > 0):
+                negation.insert(1, advmod[0])
+                compound.extend(negation)
+            print(str('Output :'+str(compound)))
+        if(check == False):
+            print('Kata Tidak Cocok')
+
 
 if __name__ == '__main__':
     sNLP = StanfordNLP()
