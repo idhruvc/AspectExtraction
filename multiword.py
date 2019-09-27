@@ -55,7 +55,8 @@ class StanfordNLP:
                 kal1 = kalimat[in1 - 1]
                 kal2 = kalimat[in2 - 1]
                 ceil = kal1 + ',' + kal2
-                ress.append(ceil)
+                ress.append(kal1)
+                ress.append(kal2)
 
         return ress
 
@@ -281,93 +282,207 @@ class StanfordNLP:
     def HasilDependencyPath(self, sentence):
         check = False
         if len(self.adjectivalModifier(sentence)) > 0:
-            print('1.Adjectival Modifier :')
+            admod = self.adjectivalModifier(sentence)
             compound = self.compound(sentence)
             negation = self.negation(sentence)
             negationNo = self.negationNO(sentence)
             advmod = self.advmod(sentence)
             hypoPhrase = self.hypoPhrase(sentence)
-            print('Compound' + str(compound))
-            print('Negation' + str(negation))
-            print('NegationNo' + str(negationNo))
-            print('Advmod' + str(advmod))
-            print('HypoPhrase' + str(hypoPhrase))
             check = True
-            if (len(negation) > 0):
-                negation.insert(1, advmod[0])
-                compound.extend(negation)
-            print(str('Output :' + str(compound)))
-        if len(self.directObject(sentence)) > 0:
-            print('2.Direct Object :')
-            compound = self.compound(sentence)
-            negation = self.negation(sentence)
-            negationNo = self.negationNO(sentence)
-            advmod = self.advmod(sentence)
-            hypoPhrase = self.hypoPhrase(sentence)
-            print('Compound' + str(compound))
-            print('Negation' + str(negation))
-            print('NegationNo' + str(negationNo))
-            print('Advmod' + str(advmod))
-            print('HypoPhrase' + str(hypoPhrase))
-            check = True
-            if (len(negation) > 0):
-                negation.insert(1, advmod[0])
-                compound.extend(negation)
-            print(str('Output :' + str(compound)))
-        if len(self.adjectivalComplement(sentence)) > 0:
-            print('3.Adjectival Complement :')
-            compound = self.compound(sentence)
-            negation = self.negation(sentence)
-            negationNo = self.negationNO(sentence)
-            advmod = self.advmod(sentence)
-            hypoPhrase = self.hypoPhrase(sentence)
-            print('Compound' + str(compound))
-            print('Negation' + str(negation))
-            print('NegationNo' + str(negationNo))
-            print('Advmod' + str(advmod))
-            print('HypoPhrase' + str(hypoPhrase))
-            check = True
-            if (len(negation) > 0):
-                negation.insert(1, advmod[0])
-                compound.extend(negation)
-            print(str('Output :' + str(compound)))
-        if len(self.complementVerb(sentence)) > 0:
-            print('4.Complement Verb :')
-            compound = self.compound(sentence)
-            negation = self.negation(sentence)
-            negationNo = self.negationNO(sentence)
-            advmod = self.advmod(sentence)
-            hypoPhrase = self.hypoPhrase(sentence)
-            print('Compound' + str(compound))
-            print('Negation' + str(negation))
-            print('NegationNo' + str(negationNo))
-            print('Advmod' + str(advmod))
-            print('HypoPhrase' + str(hypoPhrase))
-            check = True
-            if (len(negation) > 0):
-                negation.insert(1, advmod[0])
-                compound.extend(negation)
-            print(str('Output :' + str(compound)))
-        if len(self.adverbialModifier(sentence)) > 0:
-            print('5.Adverbial Modifier :')
-            compound = self.compound(sentence)
-            negation = self.negation(sentence)
-            negationNo = self.negationNO(sentence)
-            advmod = self.advmod(sentence)
-            hypoPhrase = self.hypoPhrase(sentence)
-            print('Compound' + str(compound))
-            print('Negation' + str(negation))
-            print('NegationNo' + str(negationNo))
-            print('Advmod' + str(advmod))
-            print('HypoPhrase' + str(hypoPhrase))
-            check = True
-            if (len(negation) > 0):
-                negation.insert(1, advmod[0])
-                compound.extend(negation)
-            print(str('Output :'+str(compound)))
-        if(check == False):
-            print('Kata Tidak Cocok')
+            print('AdjectivalMod')
+            print('admod' + str(admod))
+            print('compound' + str(compound))
+            print('negation' + str(negation))
+            print('negationNo' + str(negationNo))
+            print('advmod' + str(advmod))
+            print('hypoPhrase' + str(hypoPhrase))
+            total = admod.copy()
+            for i in compound:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = compound
+            for i in range(len(negation)):
+                temp_word = negation[i].replace(negationNo[i], "")
+                if (temp_word in total):
+                    temp_index = total.index(temp_word)
+                    total[temp_index] = negation[i]
+            for i in advmod:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = advmod
+            return total
 
+
+
+        if len(self.directObject(sentence)) > 0:
+            dirob = self.directObject(sentence)
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            # print('directObject' + str(dirob))
+            # print('Compound' + str(compound))
+            # print('Negation' + str(negation))
+            # print('NegationNo' + str(negationNo))
+            # print('Advmod' + str(advmod))
+            # print('HypoPhrase' + str(hypoPhrase))
+            check = True
+            print('Direct Object')
+            print('Dirob' + str(dirob))
+            print('compound' + str(compound))
+            print('negation' + str(negation))
+            print('negationNo' + str(negationNo))
+            print('advmod' + str(advmod))
+            print('hypoPhrase' + str(hypoPhrase))
+            total = dirob.copy()
+            for i in compound:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = compound
+            for i in range(len(negation)):
+                temp_word = negation[i].replace(negationNo[i], "")
+                if (temp_word in total):
+                    temp_index = total.index(temp_word)
+                    total[temp_index] = negation[i]
+            for i in advmod:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = advmod
+            return total
+
+
+
+        if len(self.adjectivalComplement(sentence)) > 0:
+            adcom = self.adjectivalComplement(sentence)
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            check = True
+            print('Adjectival Complement')
+            print('Adcom' + str(adcom))
+            print('compound' + str(compound))
+            print('negation' + str(negation))
+            print('negationNo' + str(negationNo))
+            print('advmod' + str(advmod))
+            print('hypoPhrase' + str(hypoPhrase))
+            total = adcom.copy()
+            for i in compound:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = compound
+            for i in range(len(negation)):
+                temp_word = negation[i].replace(negationNo[i], "")
+                if (temp_word in total):
+                    temp_index = total.index(temp_word)
+                    total[temp_index] = negation[i]
+            for i in advmod:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = advmod
+            return total
+
+        if len(self.complementVerb(sentence)) > 0:
+            comverb = self.complementVerb(sentence)
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            check = True
+            print('Complement Verb')
+            print('comverb'+ str(comverb))
+            print('compound'+ str(compound))
+            print('negation'+ str(negation))
+            print('negationNo'+ str(negationNo))
+            print('advmod'+ str(advmod))
+            print('hypoPhrase' + str(hypoPhrase))
+            total = comverb.copy()
+            for i in compound:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index+1] = compound
+            for i in range(len(negation)):
+                temp_word = negation[i].replace(negationNo[i], "")
+                if (temp_word in total):
+                    temp_index = total.index(temp_word)
+                    total[temp_index] = negation[i]
+            for i in advmod:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index+1] = advmod
+            return total
+
+
+        if len(self.adverbialModifier(sentence)) > 0:
+            adverbMod = self.adverbialModifier((sentence))
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            # print('AdverbialModifier' + str(adverbMod))
+            # print('Compound' + str(compound))
+            # print('Negation' + str(negation))
+            # print('NegationNo' + str(negationNo))
+            # print('Advmod' + str(advmod))
+            # print('HypoPhrase' + str(hypoPhrase))
+            check = True
+            print('Adverbial Modifier')
+            print('AdverbMod' + str(adverbMod))
+            print('compound' + str(compound))
+            print('negation' + str(negation))
+            print('negationNo' + str(negationNo))
+            print('advmod' + str(advmod))
+            print('hypoPhrase' + str(hypoPhrase))
+            total = adverbMod.copy()
+            for i in compound:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = compound
+            for i in range(len(negation)):
+                temp_word = negation[i].replace(negationNo[i], "")
+                if (temp_word in total):
+                    temp_index = total.index(temp_word)
+                    total[temp_index] = negation[i]
+            for i in advmod:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = advmod
+            return total
+
+        if len(self.adjectivalComplement(sentence)) > 0:
+            adcom = self.adjectivalComplement(sentence)
+            compound = self.compound(sentence)
+            negation = self.negation(sentence)
+            negationNo = self.negationNO(sentence)
+            advmod = self.advmod(sentence)
+            hypoPhrase = self.hypoPhrase(sentence)
+            check = True
+            print('Adjectival Complement')
+            print('Adcom' + str(adcom))
+            print('compound' + str(compound))
+            print('negation' + str(negation))
+            print('negationNo' + str(negationNo))
+            print('advmod' + str(advmod))
+            print('hypoPhrase' + str(hypoPhrase))
+            total = adcom.copy()
+            for i in compound:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = compound
+            for i in range(len(negation)):
+                temp_word = negation[i].replace(negationNo[i], "")
+                if (temp_word in total):
+                    temp_index = total.index(temp_word)
+                    total[temp_index] = negation[i]
+            for i in advmod:
+                if i in total:
+                    temp_index = total.index(i)
+                    total[temp_index:temp_index + 1] = advmod
+            return total
 
 if __name__ == '__main__':
     sNLP = StanfordNLP()
