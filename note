@@ -1,0 +1,4 @@
+1. untuk semua, cek panjang kata sepetelah di split(), jika > 2 jangan di replace.
+2. fungsi 2-5 masih ada bug.
+3. fungsi tabel 1 jadi acuan replacement.
+4. hasil fungsi dependensi = hasil yg sudah di replace, bukan hasil fungsi awal

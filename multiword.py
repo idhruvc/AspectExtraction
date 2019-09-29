@@ -36,8 +36,9 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1 - 1]
                 kal2 = kalimat[in2 - 1]
-                ress.append(kal1)
-                ress.append(kal2)
+                ceil = kal1 + ' ' + kal2
+                ress.append(ceil)
+                #ress.append(kal2)
 
         return ress
 
@@ -45,7 +46,7 @@ class StanfordNLP:
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
         ress = []
-        ceil = []
+        #ceil = []
 
         for i in range(len(pola)):
             con = 'advmod' in pola[i][0]
@@ -54,10 +55,9 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1 - 1]
                 kal2 = kalimat[in2 - 1]
-                ceil = kal1 + ',' + kal2
-                ress.append(kal1)
-                ress.append(kal2)
-
+                ceil = kal1 + ' ' + kal2
+                ress.append(ceil)
+                #ress.append(kal2)
         return ress
 
     def negation(self, sentence):  # extract negation selain no
@@ -78,8 +78,8 @@ class StanfordNLP:
                         kalimat[in1 - 1]  # hanle with  not
                 kal2 = kalimat[in2 - 1]
                 ceil = kal1 + ' ' + kal2
-                ress.append(kal1)
-                ress.append(kal2)
+                ress.append(ceil)
+                #ress.append(kal2)
         return ress
 
     def negationNO(self, sentence):  # extract negation no
@@ -95,8 +95,9 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1 - 1]
                 kal2 = kalimat[in2 - 1]
-                ress.append(kal1)
-                ress.append(kal2)
+                ceil = kal1 + ' ' + kal2
+                ress.append(ceil)
+                #ress.append(kal2)
 
         return ress
 
@@ -120,21 +121,20 @@ class StanfordNLP:
                 in2 = pola[i][1]
                 kal1 = kalimat[in1-1]
                 kal2 = kalimat[in2-1]
-                print(kal1)
-                print(kal2)
+                ceil = kal1 + ' ' + kal2
                 ress.append(ceil)
         if len(ress) > 1:
             ress[0:1] = [' '.join(ress)]
             ress.pop(1)
-
         return ress
 
-    def adjectivalModifier(self, sentence):  # extract multi word adverb
+    def adjectivalModifier(self, sentence):  # extract multi word adverb aman
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
         ress = []
         ceil = []
-
+        fin = []
+ 
         for i in range(len(pola)):
             con = 'amod' in pola[i][0]
             if con:
@@ -144,10 +144,11 @@ class StanfordNLP:
                 kal2 = kalimat[in2 - 1]
                 ress.append(kal1)
                 ress.append(kal2)
+                fin.append(ress) #pembaruan mulai dari sini
+                ress = []
+        return fin
 
-        return ress
-
-    def directObject(self, sentence):  # extract multi word adverb
+    def directObject(self, sentence):  # extract multi word adverb belum aman.
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
         polas = self.nlp.pos_tag(sentence)
@@ -181,7 +182,7 @@ class StanfordNLP:
 
         return ress
 
-    def adjectivalComplement(self, sentence):  # extract multi word adverb
+    def adjectivalComplement(self, sentence):  # extract multi word adverb 
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
         ress = []
@@ -281,7 +282,7 @@ class StanfordNLP:
 
     def HasilDependencyPath(self, sentence):
         check = False
-        if len(self.adjectivalModifier(sentence)) > 0:
+        if len(self.adjectivalModifier(sentence)):
             admod = self.adjectivalModifier(sentence)
             compound = self.compound(sentence)
             negation = self.negation(sentence)
@@ -296,6 +297,7 @@ class StanfordNLP:
             print('negationNo' + str(negationNo))
             print('advmod' + str(advmod))
             print('hypoPhrase' + str(hypoPhrase))
+            
             total = admod.copy()
             for i in compound:
                 if i in total:
@@ -311,10 +313,9 @@ class StanfordNLP:
                     temp_index = total.index(i)
                     total[temp_index:temp_index + 1] = advmod
             return total
+            
 
-
-
-        if len(self.directObject(sentence)) > 0:
+        elif len(self.directObject(sentence)) > 0:
             dirob = self.directObject(sentence)
             compound = self.compound(sentence)
             negation = self.negation(sentence)
@@ -328,6 +329,7 @@ class StanfordNLP:
             # print('Advmod' + str(advmod))
             # print('HypoPhrase' + str(hypoPhrase))
             check = True
+            
             print('Direct Object')
             print('Dirob' + str(dirob))
             print('compound' + str(compound))
@@ -335,6 +337,7 @@ class StanfordNLP:
             print('negationNo' + str(negationNo))
             print('advmod' + str(advmod))
             print('hypoPhrase' + str(hypoPhrase))
+            
             total = dirob.copy()
             for i in compound:
                 if i in total:
@@ -353,7 +356,7 @@ class StanfordNLP:
 
 
 
-        if len(self.adjectivalComplement(sentence)) > 0:
+        elif len(self.adjectivalComplement(sentence)) > 0:
             adcom = self.adjectivalComplement(sentence)
             compound = self.compound(sentence)
             negation = self.negation(sentence)
@@ -361,6 +364,7 @@ class StanfordNLP:
             advmod = self.advmod(sentence)
             hypoPhrase = self.hypoPhrase(sentence)
             check = True
+            
             print('Adjectival Complement')
             print('Adcom' + str(adcom))
             print('compound' + str(compound))
@@ -368,6 +372,7 @@ class StanfordNLP:
             print('negationNo' + str(negationNo))
             print('advmod' + str(advmod))
             print('hypoPhrase' + str(hypoPhrase))
+            
             total = adcom.copy()
             for i in compound:
                 if i in total:
@@ -384,7 +389,7 @@ class StanfordNLP:
                     total[temp_index:temp_index + 1] = advmod
             return total
 
-        if len(self.complementVerb(sentence)) > 0:
+        elif len(self.complementVerb(sentence)) > 0:
             comverb = self.complementVerb(sentence)
             compound = self.compound(sentence)
             negation = self.negation(sentence)
@@ -392,6 +397,7 @@ class StanfordNLP:
             advmod = self.advmod(sentence)
             hypoPhrase = self.hypoPhrase(sentence)
             check = True
+            
             print('Complement Verb')
             print('comverb'+ str(comverb))
             print('compound'+ str(compound))
@@ -399,6 +405,7 @@ class StanfordNLP:
             print('negationNo'+ str(negationNo))
             print('advmod'+ str(advmod))
             print('hypoPhrase' + str(hypoPhrase))
+            
             total = comverb.copy()
             for i in compound:
                 if i in total:
@@ -416,7 +423,7 @@ class StanfordNLP:
             return total
 
 
-        if len(self.adverbialModifier(sentence)) > 0:
+        elif len(self.adverbialModifier(sentence)) > 0 :
             adverbMod = self.adverbialModifier((sentence))
             compound = self.compound(sentence)
             negation = self.negation(sentence)
@@ -437,6 +444,7 @@ class StanfordNLP:
             print('negationNo' + str(negationNo))
             print('advmod' + str(advmod))
             print('hypoPhrase' + str(hypoPhrase))
+            
             total = adverbMod.copy()
             for i in compound:
                 if i in total:
@@ -453,7 +461,7 @@ class StanfordNLP:
                     total[temp_index:temp_index + 1] = advmod
             return total
 
-        if len(self.adjectivalComplement(sentence)) > 0:
+        elif len(self.adjectivalComplement(sentence)) > 0 :
             adcom = self.adjectivalComplement(sentence)
             compound = self.compound(sentence)
             negation = self.negation(sentence)
@@ -461,6 +469,7 @@ class StanfordNLP:
             advmod = self.advmod(sentence)
             hypoPhrase = self.hypoPhrase(sentence)
             check = True
+            
             print('Adjectival Complement')
             print('Adcom' + str(adcom))
             print('compound' + str(compound))
@@ -468,6 +477,7 @@ class StanfordNLP:
             print('negationNo' + str(negationNo))
             print('advmod' + str(advmod))
             print('hypoPhrase' + str(hypoPhrase))
+            
             total = adcom.copy()
             for i in compound:
                 if i in total:
@@ -486,4 +496,7 @@ class StanfordNLP:
 
 if __name__ == '__main__':
     sNLP = StanfordNLP()
-    sNLP.compound("the plot could have better story")
+    a = sNLP.HasilDependencyPath("the reason i rated it a four is because of that darn diopter adjustment dial its very small and hard to turn so you can't get an accurate adjustment ( for those of you who don't know what a diopter adjustment is , it is to adjust the focus of the viewfinder to your eyesight  ) ")
+    print(a)
+    #b = sNLP.dependency_parse("the plot could have been better")
+    

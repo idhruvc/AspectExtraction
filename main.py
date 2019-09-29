@@ -4,21 +4,40 @@ import json
 import csv
 import numpy as np
 import multiword as multiword
+import clean
+"""
+java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -annotators "tokenize,ssplit,pos,lemma,parse,sentiment" -port 9000 -timeout 30000
+"""
 
 sNLP = multiword.StanfordNLP()
-# tes = sNLP.compound("canon powershot g3 i recently purchased the canon powershot g3 and am extremely satisfied with the purchase  ")
-# tes1 = sNLP.advmod("canon powershot g3 i recently purchased the canon powershot g3 and am extremely satisfied with the purchase  ")
-# tes2 = sNLP.negation("canon powershot g3 i recently purchased the canon powershot g3 and am extremely satisfied with the purchase  ")
-tes1 = sNLP.HasilDependencyPath("The action music used in the movie wasn't too good")
-print('Output Replace :' + str(tes1))
-# print('test Adjectival Modifier :' + str(tes1))
-# tes2 = sNLP.directObject("the story got stale")
-# print('test DirectObject' + str(tes2))
-# tes3 = sNLP.adjectivalComplement("The music does sound great")
-# print('test AdjectivalComplement' + str(tes3))
-# tes4 = sNLP.complementVerb("The action music used in the movie wasn't too good")
-# print('test ComplementVerb' + str(tes4))
-# tes5 = sNLP.adverbialModifier("the storyline is well written")
-# print('test adverbialModifier' + str(tes5))
-# print(tes1)
-# print(tes2)
+camera_feature = clean.fitur_kamera()
+
+
+bag = []
+with open("Dataset.csv", 'r') as csv_file:
+    csv_reader = csv.reader(csv_file)
+    for line in csv_reader:
+        bag.append(''.join(line))
+
+hasil = []
+
+par = sNLP.HasilDependencyPath(
+    "although canon's batteries are proprietary , they last a really long time , recharge fairly quickly in the camera , plus if you want 'more power', you can even find a knockoff charger and spare batteries right here on amazon")
+print(par)
+"""
+for i in range(len(bag)):
+    parse = sNLP.HasilDependencyPath(bag[i])
+    if parse == None:
+        parse = ''
+    hasil.append(parse)
+    
+f = open('Aspect Extraction.csv', 'w')
+for item in hasil:
+    for i in range(len(item)):
+        if i == 0:
+            f.write(str(item[i]))
+        else:
+            f.write(',' + str(item[i]))
+    f.write('\n')
+f.close()
+"""
