@@ -38,7 +38,7 @@ class StanfordNLP:
                 kal2 = kalimat[in2 - 1]
                 ceil = kal1 + ' ' + kal2
                 ress.append(ceil)
-                #ress.append(kal2)
+                # ress.append(kal2)
 
         return ress
 
@@ -57,7 +57,7 @@ class StanfordNLP:
                 kal2 = kalimat[in2 - 1]
                 ceil = kal1 + ' ' + kal2
                 ress.append(ceil)
-                #ress.append(kal2)
+                # ress.append(kal2)
         return ress
 
     def negation(self, sentence):  # extract negation selain no
@@ -79,7 +79,7 @@ class StanfordNLP:
                 kal2 = kalimat[in2 - 1]
                 ceil = kal1 + ' ' + kal2
                 ress.append(ceil)
-                #ress.append(kal2)
+                # ress.append(kal2)
         return ress
 
     def negationNO(self, sentence):  # extract negation no
@@ -97,7 +97,7 @@ class StanfordNLP:
                 kal2 = kalimat[in2 - 1]
                 ceil = kal1 + ' ' + kal2
                 ress.append(ceil)
-                #ress.append(kal2)
+                # ress.append(kal2)
 
         return ress
 
@@ -134,7 +134,7 @@ class StanfordNLP:
         ress = []
         ceil = []
         fin = []
- 
+
         for i in range(len(pola)):
             con = 'amod' in pola[i][0]
             if con:
@@ -144,7 +144,7 @@ class StanfordNLP:
                 kal2 = kalimat[in2 - 1]
                 ress.append(kal1)
                 ress.append(kal2)
-                fin.append(ress) #pembaruan mulai dari sini
+                fin.append(ress)  # pembaruan mulai dari sini
                 ress = []
         return fin
 
@@ -185,7 +185,7 @@ class StanfordNLP:
 
         return fin
 
-    def adjectivalComplement(self, sentence):  # extract multi word adverb 
+    def adjectivalComplement(self, sentence):  # extract multi word adverb
         kalimat = self.nlp.word_tokenize(sentence)
         pola = self.nlp.dependency_parse(sentence)
         ress = []
@@ -279,7 +279,6 @@ class StanfordNLP:
                             new.append(pola[j][1])
                         new = sorted(set(new))
 
-
                         if len(new) == 3:
                             kal1 = kalimat[new[0] - 1]
                             kal2 = kalimat[new[1] - 1]
@@ -302,24 +301,24 @@ class StanfordNLP:
     def allTableOne(self, sentence):
         if len(self.adjectivalModifier(sentence)) > 0 or len(self.directObject(sentence)) > 0 or len(self.adjectivalComplement(sentence)) > 0 or len(self.complementVerb(sentence)) > 0 or len(self.adverbialModifier(sentence)) > 0:
             all = []
-            #Function Table 1
+            # Function Table 1
             admod = self.adjectivalModifier(sentence)
             dirob = self.directObject(sentence)
             adjcom = self.adjectivalComplement(sentence)
             comverb = self.complementVerb(sentence)
             adverb = self.adverbialModifier(sentence)
-            #Function Table 2
-            print("~~~ Sebelum dilakukan proses replace data ~~~")
+            # Function Table 2
+            #print("~~~ Sebelum dilakukan proses replace data ~~~")
             compound = self.compound(sentence)
-            print("Compound Noun:"+ str(compound))
+            #print("Compound Noun:" + str(compound))
             advmod = self.advmod(sentence)
-            print("Adverbial Modifier :"+ str(advmod))
+            #print("Adverbial Modifier :" + str(advmod))
             negation = self.negation(sentence)
-            print("Simple Negation :"+ str(negation))
+            #print("Simple Negation :" + str(negation))
             negationNo = self.negationNO(sentence)
-            print("Negation Through :"+ str(negationNo))
+            #print("Negation Through :" + str(negationNo))
             hypoPhrase = self.hypoPhrase(sentence)
-            print("HypoPhrase :"+ str(hypoPhrase))
+            #print("HypoPhrase :" + str(hypoPhrase))
             all.extend(admod)
             all.extend(dirob)
             all.extend(adjcom)
@@ -327,7 +326,7 @@ class StanfordNLP:
             all.extend(adverb)
             total = all
             total = self.removeDupli2D(total)
-            print("Satuan Function :" + str(total))
+           # print("Satuan Function :" + str(total))
             new = []
             new.append(compound)
             new.append(advmod)
@@ -335,7 +334,7 @@ class StanfordNLP:
             new.append(negationNo)
             new.append(hypoPhrase)
             for i in range(len(total)):
-                for j in range (len(total[i])):
+                for j in range(len(total[i])):
                     for x in new:
                         for y in x:
                             if total[i][j] in y:
@@ -357,9 +356,7 @@ class StanfordNLP:
                     total[temp_index:temp_index + 1] = advmod
             return total
 
+
 if __name__ == '__main__':
     sNLP = StanfordNLP()
-    a = sNLP.HasilDependencyPath("the reason i rated it a four is because of that darn diopter adjustment dial its very small and hard to turn so you can't get an accurate adjustment ( for those of you who don't know what a diopter adjustment is , it is to adjust the focus of the viewfinder to your eyesight  ) ")
-    print(a)
     #b = sNLP.dependency_parse("the plot could have been better")
-    

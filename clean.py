@@ -60,5 +60,7 @@ def bersih(fitur):
     return clean_fitur
 
 
-ou = bersih(fitur)
-Feature = bersih(ou)  # koleksi fitur
+def trainFeature():
+    ou = bersih(fitur)
+    Feature = bersih(ou)  # koleksi fitur
+    return Feature
