@@ -4,7 +4,7 @@ import nltk
 from nltk.tokenize import PunktSentenceTokenizer, word_tokenize
 
 bag = []
-with open("JOSHUA PANJAITAN - Canon G3 Relabelling.csv", 'r') as csv_file:
+with open("Data_Test.csv", 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
     for line in csv_reader:
         bag.append(''.join(line))
@@ -35,12 +35,10 @@ for j in range(len(fitur_tmp)):
         fitur.append(a)
 
 
-"""
-with open("fitur.csv", 'w', newline='') as f:
+with open("Data_Test.csv", 'w', newline='') as f:
     tulis = csv.writer(f)
-    for j in range(len(fitur)):
-        tulis.writerow([fitur[j]])
-"""
+    for j in range(len(kalimat)):
+        tulis.writerow([kalimat[j]])
 
 
 def bersih(fitur):

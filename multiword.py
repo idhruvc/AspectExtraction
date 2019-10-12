@@ -235,9 +235,9 @@ class StanfordNLP:
                 for j in range(len(pola)):
                     con2 = 'cop' in pola[j][0]
                     if con2:
-                        if (polas[pola[j][2] - 1][1] == 'VBD' or polas[pola[j][2] - 1][1] == 'JJ'):
+                        if ((polas[pola[j][2] - 1][1] == 'VBD' or polas[pola[j][2] - 1][1] == 'VBZ') or polas[pola[j][2] - 1][1] == 'JJ'):
                             new.append(pola[j][2])
-                        if (polas[pola[j][1] - 1][1] == 'VBD' or polas[pola[j][1] - 1][1] == 'JJ'):
+                        if ((polas[pola[j][1] - 1][1] == 'VBD' or polas[pola[j][2] - 1][1] == 'VBZ') or polas[pola[j][1] - 1][1] == 'JJ'):
                             new.append(pola[j][1])
                         new = sorted(set(new))
 
@@ -359,4 +359,5 @@ class StanfordNLP:
 
 if __name__ == '__main__':
     sNLP = StanfordNLP()
-    #b = sNLP.dependency_parse("the plot could have been better")
+    b = sNLP.allTableOne("the picture is amazing")
+    print(b)
