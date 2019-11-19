@@ -13,10 +13,14 @@ java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -annotators "
 sNLP = multiword.StanfordNLP()
 
 # Run Program
-"""
+coba = sNLP.complementVerb("iPod is the best mp3 player.")
+print(coba)
+
+'''
 par = sNLP.allTableOne("the reason i rated it a four is because of that darn diopter adjustment dial its very small and hard to turn so you can't get an accurate adjustment ( for those of you who don't know what a diopter adjustment is , it is to adjust the focus of the viewfinder to your eyesight  )")
 print("Output Replace" + str(par))
-"""
+'''
+
 bag = []
 with open("Data_Test.csv", 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
@@ -125,3 +129,4 @@ for item in aspect:
             f.write(',' + str(item[i]))
     f.write('\n')
 f.close()
+

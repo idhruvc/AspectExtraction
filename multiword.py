@@ -77,7 +77,7 @@ class StanfordNLP:
                     kal1 = kalimat[in1 - 2] + ' ' + \
                         kalimat[in1 - 1]  # hanle with  not
                 kal2 = kalimat[in2 - 1]
-                ceil = kal1 + ' ' + kal2
+                ceil = kal2
                 ress.append(ceil)
                 # ress.append(kal2)
         return ress
@@ -178,11 +178,8 @@ class StanfordNLP:
                             kal2 = kalimat[new[1] - 1]
                             kal3 = kalimat[new[2] - 1]
                             ress.append(kal1)
-                            ress.append(kal2)
                             ress.append(kal3)
                             fin.append(ress)  # pembaruan mulai dari sini
-                            ress = []
-
         return fin
 
     def adjectivalComplement(self, sentence):  # extract multi word adverb
@@ -208,7 +205,6 @@ class StanfordNLP:
                         kal2 = kalimat[new[1] - 1]
                         kal3 = kalimat[new[2] - 1]
                         ress.append(kal1)
-                        ress.append(kal2)
                         ress.append(kal3)
                         fin.append(ress)  # pembaruan mulai dari sini
                         ress = []
@@ -246,7 +242,6 @@ class StanfordNLP:
                             kal2 = kalimat[new[1] - 1]
                             kal3 = kalimat[new[2] - 1]
                             ress.append(kal1)
-                            ress.append(kal2)
                             ress.append(kal3)
                             fin.append(ress)  # pembaruan mulai dari sini
                             ress = []
@@ -285,7 +280,6 @@ class StanfordNLP:
                             kal3 = kalimat[new[2] - 1]
                             ress.append(kal1)
                             ress.append(kal2)
-                            ress.append(kal3)
                             fin.append(ress)  # pembaruan mulai dari sini
                             ress = []
 
@@ -355,6 +349,7 @@ class StanfordNLP:
                     temp_index = total.index(i)
                     total[temp_index:temp_index + 1] = advmod
             return total
+
 
 
 if __name__ == '__main__':
